@@ -8,7 +8,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #252525;
     background-color: #f9f9f9;
 }
 
@@ -17,6 +17,11 @@ body {
     max-width: 1100px;
     margin: 0 auto;
 }
+.container1{
+    color: #070000;
+   
+}
+
 
 header .container {
     display: flex;
@@ -26,13 +31,20 @@ header .container {
 
 /* Header */
 header {
-    background-color: lch(52.1% 50.86 276.56);
+    background-color: #375269;
     color: #fff;
     padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: transform 0.3s ease;
 }
+
+header.hidden {
+    transform: translateY(-100%);
+}
+
+
 
 .logo h1 {
     font-size: 1.8rem;
@@ -87,15 +99,15 @@ nav {
 .bar {
     height: 3px;
     width: 25px;
-    background-color: #fff;
+    background-color: #ffffff;
     margin: 4px 0;
     border-radius: 2px;
 }
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(rgba(255, 255, 255, 0.541), rgba(0, 35, 70, 0.8)), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-    color: #ffffff;
+    background: linear-gradient(rgba(98, 99, 100, 0.541), rgba(0, 35, 70, 0.8)), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+    color: #cecece;
     padding: 6rem 0;
     text-align: center;
 }
@@ -111,41 +123,45 @@ nav {
 }
 
 .btn {
-    background-color: #ffcc00;
+    background-color: #d8e700;
     color: #000000;
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 25px;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
     text-decoration: none;
     display: inline-block;
 }
 
 .btn:hover {
-    background-color: #2b64ff;
+    background-color: #f5ffd6;
 }
 
 /* Sections */
 section {
     padding: 4rem 0;
-    background-color: #fff;
+    background-color: #ffffff;
     margin-bottom: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    border-radius: 0px;
+    box-shadow: 0 0 10px rgba(151, 101, 101, 0.05);
 }
 
 section h2 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #004080;
+    color: #000000;
+}
+
+.hero-title {
+    color: #ffffff;
 }
 
 section h3 {
     margin-top: 2rem;
     margin-bottom: 1rem;
-    color: #004080;
+    color: #0d2944;
 }
 
 section ul {
@@ -160,9 +176,10 @@ section li {
 }
 
 .highlight {
-    background-color: #e6f7ff;
-    border: 1px solid #004080;
-    border-radius: 5px;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 9px;
+
     padding: 1rem;
     margin-top: 1.5rem;
     text-align: center;
@@ -192,6 +209,7 @@ label {
 
 input[type="text"],
 input[type="email"],
+select,
 textarea {
     width: 100%;
     padding: 0.75rem;
@@ -203,8 +221,9 @@ textarea {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
+select:focus,
 textarea:focus {
-    border-color: #778899;
+    border-color: #404a53;
     outline: none;
 }
 
@@ -215,7 +234,7 @@ textarea {
 
 /* Footer */
 footer {
-    background-color: #205c9c;
+    background-color: #375269;
     color: #fff;
     padding: 1.5rem 0;
     text-align: center;
@@ -242,6 +261,61 @@ footer ul li a:hover {
     text-decoration: underline;
 }
 
+/* Services Carousel */
+.carousel-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+}
+
+.carousel img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+.carousel-btn:hover {
+    background-color: #333;
+}
+
+
+
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .nav-links {
@@ -249,7 +323,7 @@ footer ul li a:hover {
         right: 0;
         height: 100vh;
         top: 0;
-        background-color: #004080;
+        background-color: #375269;
         flex-direction: column;
         width: 200px;
         transform: translateX(100%);
@@ -258,7 +332,7 @@ footer ul li a:hover {
     }
 
     .nav-links li {
-        margin: 2rem 0;
+        margin: 1rem 0;
         text-align: center;
     }
 
@@ -272,5 +346,86 @@ footer ul li a:hover {
         right: 1rem;
         top: 50%;
         transform: translateY(-50%);
+        z-index: 1001; /* Ensure it's above other elements */
+    }
+
+    #hero h2 {
+        font-size: 1.8rem; /* Smaller heading for mobile */
+    }
+
+    #process-timeline .timeline {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    #process-timeline .timeline-item {
+        min-width: 100%;
+    }
+
+    /* Adjust carousel container and image sizes for smaller screens */
+    .carousel-container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .carousel img {
+        max-height: 300px;
+    }
+}
+
+
+
+
+
+@media (max-width: 480px) {
+    .hamburger {
+        display: flex !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 0.5rem;
+        border-radius: 5px;
+        z-index: 1002;
+    }
+
+    #hero h2 {
+        font-size: 1.5rem;
+    }
+
+    #hero {
+        padding: 4rem 0;
+    }
+
+    /* Further adjust carousel container and images for small phones */
+    .carousel-container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+
+    .carousel img {
+        max-height: 180px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 360px) {
+    .carousel-container {
+        max-width: 100%;
+        padding: 0 3px;
+    }
+
+    .carousel img {
+        max-height: 150px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .carousel-container {
+        max-width: 100%;
+        padding: 0 2px;
+    }
+
+    .carousel img {
+        max-height: 130px;
+        width: 100%;
     }
 }
