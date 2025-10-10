@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateSizes() {
         itemsPerView = window.innerWidth < 768 ? 1 : 3;
-        imageWidth = carouselContainer.offsetWidth / itemsPerView;
+        imageWidth = Math.floor(carouselContainer.offsetWidth / itemsPerView);
+        carouselContainer.style.width = `${itemsPerView * imageWidth}px`;
         carousel.style.width = `${totalImages * imageWidth}px`;
         const images = carousel.querySelectorAll('img');
         images.forEach(img => img.style.width = `${imageWidth}px`);
