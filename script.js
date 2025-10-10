@@ -2,8 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
 
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
+    const toggleMenu = () => {
+        const isActive = navLinks.classList.contains('active');
+        if (isActive) {
+            navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        } else {
+            navLinks.classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+    };
+
+    hamburger.addEventListener('click', (e) => {
+        toggleMenu();
     });
 
     // Optional: Close menu when a link is clicked (for better UX on mobile)
@@ -11,8 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => {
             if (navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
+                document.body.classList.remove('menu-open');
             }
         });
+    });
+
+    // Close menu on scroll
+    window.addEventListener('scroll', () => {
+        if (navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
     });
 
     // Form submission handling (basic example)
@@ -72,14 +92,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Header hide/show on scroll for mobile
     const header = document.querySelector('header');
+    const aboutSection = document.getElementById('about');
+    const aboutBottom = aboutSection.offsetTop + aboutSection.offsetHeight;
     let lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
         if (window.innerWidth <= 768) {
-            if (window.scrollY > lastScrollY) {
-                // Scrolling down
+            if (window.scrollY > lastScrollY && window.scrollY > aboutBottom) {
+                // Scrolling down and past the about section
                 header.classList.add('hidden');
-            } else {
+            } else if (window.scrollY < lastScrollY) {
                 // Scrolling up
                 header.classList.remove('hidden');
             }
@@ -90,4 +112,3 @@ document.addEventListener('DOMContentLoaded', () => {
         lastScrollY = window.scrollY;
     });
 });
-
