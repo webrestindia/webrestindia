@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hamburger.addEventListener('click', (e) => {
         toggleMenu();
+        hamburger.classList.toggle('active');
     });
 
     // Optional: Close menu when a link is clicked (for better UX on mobile)
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
             document.body.classList.remove('menu-open');
+            hamburger.classList.remove('active');
         }
     });
 
