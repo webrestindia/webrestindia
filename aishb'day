@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday Aishwarya 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#ffd1e8;--bg2:#d8c7ff;--card:#ffffffd9;--ink:#4a1d4f;--pink:#ff4d9d;--gold:#ffb703;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#3b1650;--bg2:#1d1b4d;--card:#2a1a45e6;--ink:#ffe6f4}}
+:root[data-theme="dark"]{--bg1:#3b1650;--bg2:#1d1b4d;--card:#2a1a45e6;--ink:#ffe6f4}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:Poppins,system-ui,sans-serif;color:var(--ink);background:linear-gradient(160deg,var(--bg1),var(--bg2));overflow:hidden;text-align:center}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:5}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px}
+.screen.on{display:flex;animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+h1{font-family:Pacifico,cursive;font-weight:400;font-size:clamp(2rem,9vw,3.4rem);color:var(--pink);line-height:1.2}
+p{font-size:1rem;max-width:340px}
+.gift{font-size:110px;cursor:pointer;animation:wob 1.2s infinite;user-select:none;filter:drop-shadow(0 10px 12px #0003)}
+@keyframes wob{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) scale(1.1)}}
+.cake{font-size:96px;position:relative;cursor:pointer;user-select:none}
+.flame{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:34px;animation:fl .4s infinite alternate}
+.flame.off{display:none}
+@keyframes fl{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.25) rotate(6deg)}}
+.btn{border:0;background:var(--pink);color:#fff;font:600 1rem Poppins,sans-serif;padding:12px 26px;border-radius:30px;cursor:pointer;box-shadow:0 6px 16px #ff4d9d66}
+.card{background:var(--card);border-radius:22px;padding:20px;max-width:360px;width:100%;box-shadow:0 10px 30px #0002;backdrop-filter:blur(6px)}
+.card p{max-width:none;min-height:130px;text-align:left;line-height:1.6}
+.reasons{display:flex;flex-direction:column;gap:8px;width:100%;max-width:360px}
+.reasons div{background:var(--card);padding:12px;border-radius:16px;opacity:0;transform:translateY(20px);transition:.5s}
+.reasons div.show{opacity:1;transform:none}
+a{color:var(--pink);font-weight:600;text-decoration:none}
+.balloon{position:fixed;bottom:-80px;font-size:48px;animation:up linear forwards;z-index:1;pointer-events:none}
+@keyframes up{to{transform:translateY(-120vh) rotate(15deg)}}
+small{opacity:.8}
+</style></head><body>
+<canvas id="c"></canvas>
+
+<div class="screen on" id="s1">
+  <p>Heyyy <b class="nm"></b> 💖<br>Someone made a little surprise for you…</p>
+  <div class="gift" id="gift">🎁</div>
+  <small>Tap the gift to open it</small>
+</div>
+
+<div class="screen" id="s2">
+  <h1>Happy Birthday,<br><span class="nm"></span>! 🎉</h1>
+  <div class="cake" id="cake"><span class="flame" id="fl">🔥</span>🎂</div>
+  <p id="hint">Make a wish… then tap the candle to blow it out 🕯️</p>
+</div>
+
+<div class="screen" id="s3">
+  <h1>A note for you 💌</h1>
+  <div class="card"><p id="msg"></p></div>
+  <button class="btn" id="more">One more thing ✨</button>
+</div>
+
+<div class="screen" id="s4">
+  <h1>Why you're special 🌸</h1>
+  <div class="reasons" id="rs"></div>
+  <small>Forever your bestie 🫶<br><a id="ig" target="_blank" rel="noopener"></a></small>
+  <button class="btn" id="again">Celebrate again 🎊</button>
+</div>
+
+<script>
+// ✏️ EDIT THESE
+const CONFIG={
+  name:"Aishwarya",
+  handle:"aishwaryaasharma__",
+  from:"Your Bestie",
+  message:"Happy Birthday to the most amazing, beautiful and funniest person I know! Thank you for every laugh, every secret and every random memory we made. May this year bring you everything your heart wishes for. I'm so lucky to have you. Love you loads! 💕",
+  reasons:["You make every day brighter 🌞","You're always there when I need you 🤗","Your smile is pure magic ✨","Best memories are always with you 📸"]
+};
+const $=id=>document.getElementById(id);
+document.querySelectorAll('.nm').forEach(e=>e.textContent=CONFIG.name);
+$('ig').textContent='@'+CONFIG.handle;$('ig').href='https://instagram.com/'+CONFIG.handle;
+function show(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$('s'+n).classList.add('on')}
+
+// confetti
+const cv=$('c'),cx=cv.getContext('2d');let P=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener('resize',rs);
+function burst(n=120){const col=['#ff4d9d','#ffb703','#8ecae6','#b388ff','#80ed99','#fff'];
+ for(let i=0;i<n;i++)P.push({x:innerWidth/2,y:innerHeight/2,vx:(Math.random()-.5)*16,vy:Math.random()*-14-3,s:Math.random()*8+4,c:col[i%6],r:Math.random()*6,l:160})}
+(function loop(){cx.clearRect(0,0,cv.width,cv.height);
+ P=P.filter(p=>p.l>0);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.r+=.2;p.l--;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore()});
+ requestAnimationFrame(loop)})();
+function balloons(){const e=['🎈','🎈','💖','🎀','🌸'];for(let i=0;i<14;i++){const b=document.createElement('div');b.className='balloon';b.textContent=e[i%5];
+ b.style.left=Math.random()*92+'vw';b.style.animationDuration=(5+Math.random()*4)+'s';b.style.animationDelay=Math.random()*2+'s';document.body.appendChild(b);setTimeout(()=>b.remove(),11000)}}
+
+$('gift').onclick=()=>{burst();balloons();show(2)};
+$('cake').onclick=()=>{if($('fl').classList.contains('off'))return;$('fl').classList.add('off');
+ $('hint').textContent='Yayyy! Hope your wish comes true 🥳';burst(200);balloons();setTimeout(()=>{show(3);type()},1800)};
+function type(){const m=CONFIG.message+"\n\n— "+CONFIG.from;let i=0;$('msg').textContent='';
+ const t=setInterval(()=>{$('msg').textContent=m.slice(0,++i);if(i>=m.length)clearInterval(t)},35)}
+$('more').onclick=()=>{show(4);const r=$('rs');r.innerHTML='';
+ CONFIG.reasons.forEach((t,i)=>{const d=document.createElement('div');d.textContent=t;r.appendChild(d);setTimeout(()=>d.classList.add('show'),300+i*500)});burst(100)};
+$('again').onclick=()=>{$('fl').classList.remove('off');$('hint').textContent='Make a wish… then tap the candle to blow it out 🕯️';show(1)};
+</script></body></html>
